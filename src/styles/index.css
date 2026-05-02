@@ -1,0 +1,301 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'MS Sans Serif', 'Microsoft Sans Serif', Tahoma, Geneva, sans-serif;
+  font-size: 12px;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+}
+
+/* Windows 98 3D Border Utilities */
+.win98-border-raised {
+  border: 2px solid;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+}
+
+.win98-border-sunken {
+  border: 2px solid;
+  border-color: #404040 #ffffff #ffffff #404040;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf;
+}
+
+.win98-border-field {
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+}
+
+/* Windows 98 Button */
+.win98-btn {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+  padding: 2px 12px;
+  font-family: 'MS Sans Serif', Tahoma, sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  min-width: 75px;
+  height: 23px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.win98-btn:active {
+  border-color: #404040 #ffffff #ffffff #404040;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf;
+  padding: 3px 11px 1px 13px;
+}
+
+.win98-btn:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+
+/* Title Bar */
+.win98-titlebar {
+  background: linear-gradient(90deg, #000080, #1084d0);
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 2px 3px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  height: 22px;
+}
+
+.win98-titlebar-inactive {
+  background: linear-gradient(90deg, #808080, #b0b0b0);
+}
+
+/* Title bar buttons */
+.win98-title-btn {
+  width: 16px;
+  height: 14px;
+  background: #c0c0c0;
+  border: 1px solid;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 8px;
+  line-height: 1;
+  padding: 0;
+}
+
+.win98-title-btn:active {
+  border-color: #404040 #ffffff #ffffff #404040;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: repeating-conic-gradient(#c0c0c0 0% 25%, #ffffff 0% 50%) 50% / 2px 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+}
+
+::-webkit-scrollbar-button {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  display: block;
+  height: 16px;
+  width: 16px;
+}
+
+/* Scanline effect */
+.scanlines::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    transparent 0,
+    transparent 1px,
+    rgba(0, 0, 0, 0.04) 1px,
+    rgba(0, 0, 0, 0.04) 2px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Menu styling */
+.win98-menu {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  padding: 2px;
+}
+
+.win98-menu-item {
+  padding: 3px 24px 3px 24px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 11px;
+}
+
+.win98-menu-item:hover {
+  background: #000080;
+  color: white;
+}
+
+.win98-menu-separator {
+  height: 1px;
+  background: #808080;
+  margin: 2px 2px;
+  border-bottom: 1px solid #ffffff;
+}
+
+/* Input styling */
+.win98-input {
+  background: white;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+  padding: 2px 4px;
+  font-family: 'MS Sans Serif', Tahoma, sans-serif;
+  font-size: 11px;
+  outline: none;
+}
+
+/* Tab styling */
+.win98-tab {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  padding: 2px 12px;
+  font-size: 11px;
+  cursor: pointer;
+  position: relative;
+  margin-right: -1px;
+}
+
+.win98-tab-active {
+  background: #c0c0c0;
+  border-bottom-color: #c0c0c0;
+  z-index: 1;
+  padding-bottom: 4px;
+  margin-bottom: -2px;
+}
+
+/* Solarpunk accent */
+.solarpunk-glow {
+  box-shadow: 0 0 8px rgba(122, 179, 66, 0.15), 0 0 16px rgba(26, 122, 109, 0.08);
+}
+
+/* Progress bar */
+.win98-progress {
+  height: 16px;
+  background: white;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040;
+}
+
+.win98-progress-fill {
+  height: 100%;
+  background: #000080;
+}
+
+/* Desktop icon selection */
+.desktop-icon-selected .desktop-icon-label {
+  background: #000080;
+  color: white;
+}
+
+/* Start button */
+.start-btn-active {
+  border-color: #404040 #ffffff #ffffff #404040 !important;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf !important;
+}
+
+/* Prevent text selection during drag */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Pixel font for retro elements */
+.font-pixel {
+  font-family: 'Courier New', 'Fixedsys', monospace;
+  letter-spacing: 1px;
+}
+
+/* BSOD */
+.bsod {
+  background: #000080;
+  color: white;
+  font-family: 'Courier New', monospace;
+}
+
+/* Checkbox */
+.win98-checkbox {
+  width: 13px;
+  height: 13px;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040;
+  background: white;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.win98-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0px;
+  width: 5px;
+  height: 8px;
+  border: solid #000;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Textarea */
+.win98-textarea {
+  background: white;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+  padding: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  outline: none;
+  resize: none;
+}
