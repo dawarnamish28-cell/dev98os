@@ -1,193 +1,71 @@
 import { AppDefinition, DesktopIcon, FileSystemNode } from '../types';
 
+
 export const ALL_APPS: AppDefinition[] = [
-  {
-    id: 'calculator',
-    name: 'Calculator',
-    icon: 'Calculator',
-    category: 'Utilities',
-    size: '128 KB',
-    description: 'Standard calculator with basic arithmetic operations.',
-    installed: true,
-  },
-  {
-    id: 'json-viewer',
-    name: 'JSON Viewer',
-    icon: 'Braces',
-    category: 'Development',
-    size: '96 KB',
-    description: 'Parse, format, and explore JSON data with syntax highlighting.',
-    installed: true,
-  },
-  {
-    id: 'color-picker',
-    name: 'Color Picker',
-    icon: 'Palette',
-    category: 'Utilities',
-    size: '64 KB',
-    description: 'Pick colors and get HEX, RGB, and HSL values.',
-    installed: true,
-  },
-  {
-    id: 'markdown-preview',
-    name: 'Markdown Preview',
-    icon: 'FileText',
-    category: 'Development',
-    size: '192 KB',
-    description: 'Write and preview Markdown with live rendering.',
-    installed: true,
-  },
-  {
-    id: 'snake',
-    name: 'Snake',
-    icon: 'Gamepad2',
-    category: 'Games',
-    size: '48 KB',
-    description: 'Classic snake game. Use arrow keys to control.',
-    installed: true,
-  },
-  {
-    id: 'minesweeper',
-    name: 'Minesweeper',
-    icon: 'Bomb',
-    category: 'Games',
-    size: '96 KB',
-    description: 'The classic minesweeper puzzle game.',
-    installed: true,
-  },
-  {
-    id: 'clock',
-    name: 'Clock',
-    icon: 'Clock',
-    category: 'Utilities',
-    size: '80 KB',
-    description: 'Analog and digital clock with stopwatch.',
-    installed: true,
-  },
-  {
-    id: 'collabcode',
-    name: 'CollabCode',
-    icon: 'Code2',
-    category: 'Development',
-    size: '2.4 MB',
-    description: 'Collaborative code editor. Opens in a new tab.',
-    installed: true,
-    isExternal: true,
-    externalUrl: 'https://collabcodeforall.vercel.app',
-  },
-  {
-    id: 'terminal',
-    name: 'Terminal',
-    icon: 'Terminal',
-    category: 'Development',
-    size: '256 KB',
-    description: 'Command-line terminal emulator.',
-    installed: true,
-  },
-  {
-    id: 'text-editor',
-    name: 'Text Editor',
-    icon: 'FileEdit',
-    category: 'Development',
-    size: '160 KB',
-    description: 'Simple text editor for quick notes and code.',
-    installed: true,
-  },
-  {
-    id: 'file-manager',
-    name: 'File Manager',
-    icon: 'FolderOpen',
-    category: 'Utilities',
-    size: '180 KB',
-    description: 'Browse and manage files and folders.',
-    installed: true,
-  },
-  {
-    id: 'app-store',
-    name: 'App Store',
-    icon: 'ShoppingBag',
-    category: 'System',
-    size: '320 KB',
-    description: 'Browse and install applications.',
-    installed: true,
-  },
-  {
-    id: 'my-computer',
-    name: 'My Computer',
-    icon: 'Monitor',
-    category: 'System',
-    size: '64 KB',
-    description: 'View system information and drives.',
-    installed: true,
-  },
+  
+  { id: 'my-computer', name: 'My Computer', icon: '/upload_files/mycomp-removebg-preview.png', category: 'System', size: '64 KB', description: 'View system info', installed: true },
+  { id: 'file-manager', name: 'File Manager', icon: '/upload_files/folder-removebg-preview.png', category: 'Utilities', size: '180 KB', description: 'Browse files', installed: true },
+  { id: 'calculator', name: 'Calculator', icon: '/upload_files/calculator-removebg-preview.png', category: 'Utilities', size: '128 KB', description: 'Basic calculator', installed: true },
+  { id: 'terminal', name: 'Terminal', icon: '/upload_files/terminal-removebg-preview.png', category: 'Development', size: '256 KB', description: 'Command line', installed: true },
+  { id: 'text-editor', name: 'Text Editor', icon: '/upload_files/docs-removebg-preview.png', category: 'Development', size: '160 KB', description: 'Simple editor', installed: true },
+  { id: 'app-store', name: 'App Store', icon: '/upload_files/folder-removebg-preview.png', category: 'System', size: '320 KB', description: 'Install apps', installed: true },
+
+
+  { id: 'snake', name: 'Snake', icon: 'Gamepad2', category: 'Games', size: '48 KB', description: 'Snake game', installed: true },
+  { id: 'minesweeper', name: 'Minesweeper', icon: 'Bomb', category: 'Games', size: '96 KB', description: 'Minesweeper', installed: true },
+
+  
+  { id: 'clock', name: 'Clock', icon: 'Clock', category: 'Utilities', size: '80 KB', description: 'Clock app', installed: true },
+  { id: 'json-viewer', name: 'JSON Viewer', icon: 'Braces', category: 'Development', size: '96 KB', description: 'View JSON', installed: true },
+  { id: 'color-picker', name: 'Color Picker', icon: 'Palette', category: 'Utilities', size: '64 KB', description: 'Pick colors', installed: true },
+  { id: 'markdown-preview', name: 'Markdown Preview', icon: 'FileText', category: 'Development', size: '192 KB', description: 'Preview markdown', installed: true },
+
+  
+  { id: 'camera', name: 'Camera', icon: '/upload_files/camera-removebg-preview.png', category: 'Media', size: '512 KB', description: 'Webcam capture app', installed: true },
+
+  
+  { id: 'crusher-docs', name: 'Crusher Docs', icon: '/upload_files/docs-removebg-preview.png', category: 'Productivity', size: '300 KB', description: 'Document editor', installed: true },
+  { id: 'crusher-sheets', name: 'Crusher Sheets', icon: '/upload_files/sheets-removebg-preview.png', category: 'Productivity', size: '320 KB', description: 'Spreadsheet', installed: true },
+  { id: 'crusher-slides', name: 'Crusher Slides', icon: '/upload_files/slides-removebg-preview.png', category: 'Productivity', size: '340 KB', description: 'Presentation tool', installed: true },
+
+  
+  { id: 'photoshop', name: 'Photoshop', icon: '/upload_files/bsoh.png', category: 'Graphics', size: '12 MB', description: 'Totally legit photoshop', installed: true }
 ];
+
 
 export const STORE_APPS: AppDefinition[] = [
-  {
-    id: 'paint',
-    name: 'Paint',
-    icon: 'Paintbrush',
-    category: 'Graphics',
-    size: '256 KB',
-    description: 'Simple bitmap drawing tool with brushes and shapes.',
-    installed: false,
-  },
-  {
-    id: 'music-player',
-    name: 'Music Player',
-    icon: 'Music',
-    category: 'Media',
-    size: '384 KB',
-    description: 'Play audio files with a retro visualizer.',
-    installed: false,
-  },
-  {
-    id: 'weather',
-    name: 'Weather',
-    icon: 'CloudSun',
-    category: 'Utilities',
-    size: '128 KB',
-    description: 'Check the weather forecast with pixel art icons.',
-    installed: false,
-  },
-  {
-    id: 'chat',
-    name: 'Chat Room',
-    icon: 'MessageSquare',
-    category: 'Communication',
-    size: '192 KB',
-    description: 'Retro-styled chat application.',
-    installed: false,
-  },
-  {
-    id: 'todo',
-    name: 'Todo List',
-    icon: 'ListChecks',
-    category: 'Productivity',
-    size: '96 KB',
-    description: 'Track your tasks with a classic to-do list.',
-    installed: false,
-  },
-  {
-    id: 'camera',
-    name: 'Camera',
-    icon: 'Camera',
-    category: 'Media',
-    size: '256 KB',
-    description: 'Take photos with retro filters and effects.',
-    installed: false,
-  },
+  { id: 'paint', name: 'Paint', icon: '/upload_files/folder-removebg-preview.png', category: 'Graphics', size: '256 KB', description: 'Drawing tool', installed: false },
+  { id: 'music-player', name: 'Music Player', icon: 'Music', category: 'Media', size: '384 KB', description: 'Play music', installed: false },
+  { id: 'weather', name: 'Weather', icon: 'CloudSun', category: 'Utilities', size: '128 KB', description: 'Weather app', installed: false },
+  { id: 'chat', name: 'Chat Room', icon: 'MessageSquare', category: 'Communication', size: '192 KB', description: 'Chat app', installed: false },
+  { id: 'todo', name: 'Todo List', icon: 'ListChecks', category: 'Productivity', size: '96 KB', description: 'Tasks', installed: false }
 ];
 
+
 export const DESKTOP_ICONS: DesktopIcon[] = [
-  { id: 'icon-mycomputer', label: 'My Computer', icon: 'Monitor', appId: 'my-computer', x: 20, y: 20 },
-  { id: 'icon-mydocs', label: 'My Documents', icon: 'Folder', appId: 'file-manager', x: 20, y: 110 },
-  { id: 'icon-recycle', label: 'Recycle Bin', icon: 'Trash2', appId: undefined, x: 20, y: 200 },
-  { id: 'icon-code', label: 'Code Editor', icon: 'Code2', appId: 'text-editor', x: 20, y: 290 },
-  { id: 'icon-filemanager', label: 'File Manager', icon: 'FolderOpen', appId: 'file-manager', x: 20, y: 380 },
-  { id: 'icon-terminal', label: 'Terminal', icon: 'Terminal', appId: 'terminal', x: 20, y: 470 },
-  { id: 'icon-notepad', label: 'Text Editor', icon: 'FileText', appId: 'text-editor', x: 20, y: 560 },
-  { id: 'icon-collabcode', label: 'CollabCode', icon: 'Code2', appId: 'collabcode', x: 20, y: 650 },
+  
+  { id: 'icon-mycomputer', label: 'My Computer', icon: '/upload_files/mycomp-removebg-preview.png', appId: 'my-computer', x: 20, y: 20 },
+  { id: 'icon-files', label: 'Files', icon: '/upload_files/folder-removebg-preview.png', appId: 'file-manager', x: 20, y: 110 },
+  { id: 'icon-terminal', label: 'Terminal', icon: '/upload_files/terminal-removebg-preview.png', appId: 'terminal', x: 20, y: 200 },
+  { id: 'icon-editor', label: 'Text Editor', icon: '/upload_files/docs-removebg-preview.png', appId: 'text-editor', x: 20, y: 290 },
+  { id: 'icon-store', label: 'App Store', icon: '/upload_files/folder-removebg-preview.png', appId: 'app-store', x: 20, y: 380 },
+  { id: 'icon-snake', label: 'Snake', icon: 'Gamepad2', appId: 'snake', x: 20, y: 470 },
+  { id: 'icon-minesweeper', label: 'Minesweeper', icon: 'Bomb', appId: 'minesweeper', x: 20, y: 560 },
+
+  
+  { id: 'icon-calculator', label: 'Calculator', icon: '/upload_files/calculator-removebg-preview.png', appId: 'calculator', x: 110, y: 20 },
+  { id: 'icon-clock', label: 'Clock', icon: 'Clock', appId: 'clock', x: 110, y: 110 },
+  { id: 'icon-json', label: 'JSON Viewer', icon: 'Braces', appId: 'json-viewer', x: 110, y: 200 },
+  { id: 'icon-color', label: 'Color Picker', icon: 'Palette', appId: 'color-picker', x: 110, y: 290 },
+  { id: 'icon-md', label: 'Markdown', icon: 'FileText', appId: 'markdown-preview', x: 110, y: 380 },
+
+  { id: 'icon-camera', label: 'Camera', icon: '/upload_files/camera-removebg-preview.png', appId: 'camera', x: 110, y: 470 },
+  { id: 'icon-photoshop', label: 'Photoshop', icon: '/upload_files/bsoh.png', appId: 'photoshop', x: 110, y: 560 },
+
+
+  { id: 'icon-docs', label: 'Crusher Docs', icon: '/upload_files/docs-removebg-preview.png', appId: 'crusher-docs', x: 200, y: 20 },
+  { id: 'icon-sheets', label: 'Crusher Sheets', icon: '/upload_files/sheets-removebg-preview.png', appId: 'crusher-sheets', x: 200, y: 110 },
+  { id: 'icon-slides', label: 'Crusher Slides', icon: '/upload_files/slides-removebg-preview.png', appId: 'crusher-slides', x: 200, y: 200 }
 ];
 
 export const FILE_SYSTEM: FileSystemNode = {
@@ -198,28 +76,14 @@ export const FILE_SYSTEM: FileSystemNode = {
       name: 'My Documents',
       type: 'folder',
       children: [
-        { name: 'readme.txt', type: 'file', content: 'Welcome to Dev98!\n\nThis is a Windows 98 themed WebOS built for the hackathon.\n\nFeatures:\n- Draggable and resizable windows\n- Built-in apps and games\n- App Store\n- Terminal emulator\n- Solarpunk design accents', size: '256 B', modified: '2026-05-02' },
-        { name: 'notes.md', type: 'file', content: '# Dev98 Notes\n\n## Todo\n- [x] Build calculator\n- [x] Build snake game\n- [x] Build terminal\n- [ ] Add more apps from store\n\n## Ideas\n- Solarpunk theme with green accents\n- CRT scanline effect\n- Retro boot sequence', size: '180 B', modified: '2026-05-02' },
-      ],
-    },
-    {
-      name: 'Program Files',
-      type: 'folder',
-      children: [
-        { name: 'Dev98', type: 'folder', children: [
-          { name: 'system.cfg', type: 'file', content: '[System]\nVersion=98.0\nBuild=2026.05\nTheme=Solarpunk\nResolution=1024x768', size: '96 B', modified: '2026-05-01' },
-        ]},
-        { name: 'Apps', type: 'folder', children: [] },
-      ],
-    },
-    {
-      name: 'Windows',
-      type: 'folder',
-      children: [
-        { name: 'System32', type: 'folder', children: [
-          { name: 'config.sys', type: 'file', content: 'DEVICE=HIMEM.SYS\nDEVICE=EMM386.EXE\nFILES=40\nBUFFERS=20', size: '64 B', modified: '2026-01-01' },
-        ]},
-      ],
-    },
-  ],
+        {
+          name: 'readme.txt',
+          type: 'file',
+          content: 'Welcome to Dev98',
+          size: '256 B',
+          modified: '2026-05-02'
+        }
+      ]
+    }
+  ]
 };

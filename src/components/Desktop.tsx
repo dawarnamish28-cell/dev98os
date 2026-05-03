@@ -1,84 +1,230 @@
-import React, { useState } from 'react';
-import { DesktopIcon as DesktopIconType, AppDefinition } from '../types';
+import React, { useState, useRef } from 'react';
 import * as Icons from 'lucide-react';
 
-interface DesktopProps {
-  icons: DesktopIconType[];
-  onOpenApp: (app: AppDefinition) => void;
-  installedApps: AppDefinition[];
-}
+export default function Desktop({
+  icons = [],
+  setIcons,
+  installedApps = [],
+  onOpenApp,
+  onDeleteApp,
+  wallpaper,
+  setWallpaper
+}: any) {
 
-function getIcon(name: string, size = 32) {
-  const IconComponent = (Icons as any)[name];
-  if (!IconComponent) return null;
-  return <IconComponent size={size} />;
-}
+  const [selected, setSelected] = useState<string | null>(null);
+  const [menu, setMenu] = useState<any>(null);
+  const [dragging, setDragging] = useState<string | null>(null);
 
-export default function Desktop({ icons, onOpenApp, installedApps }: DesktopProps) {
-  const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
+  const offset = useRef({ x: 0, y: 0 });
+  const fileInput = useRef<HTMLInputElement>(null);
 
-  const handleIconClick = (iconId: string) => {
-    setSelectedIcon(iconId);
+  // ---------------- ICON ----------------
+  const getIcon = (icon: string) => {
+  // IMAGE ICON (from /public)
+  if (icon.startsWith('/')) {
+    return (
+      <img
+        src={icon}
+        alt="icon"
+        style={{
+          width: 42,
+          height: 42,
+          objectFit: 'contain',
+          pointerEvents: 'none'
+        }}
+        draggable={false}
+      />
+    );
+  }
+
+  // LUCIDE ICON (fallback)
+  const Icon = (Icons as any)[icon];
+  return Icon
+    ? <Icon size={32} />
+    : (
+        <div style={{
+          width: 32,
+          height: 32,
+          background: '#888'
+        }} />
+      );
+};
+
+  // ---------------- DRAG ----------------
+  const startDrag = (e: any, icon: any) => {
+    offset.current = {
+      x: e.clientX - icon.x,
+      y: e.clientY - icon.y
+    };
+    setDragging(icon.id);
   };
 
-  const handleIconDoubleClick = (icon: DesktopIconType) => {
-    if (icon.appId) {
-      const app = installedApps.find(a => a.id === icon.appId);
-      if (app) onOpenApp(app);
-    }
+  const onDrag = (e: any) => {
+    if (!dragging) return;
+
+    setIcons((prev: any[]) =>
+      prev.map(icon =>
+        icon.id === dragging
+          ? {
+              ...icon,
+              x: e.clientX - offset.current.x,
+              y: e.clientY - offset.current.y
+            }
+          : icon
+      )
+    );
   };
 
-  const handleDesktopClick = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).id === 'desktop-area') {
-      setSelectedIcon(null);
-    }
+  const stopDrag = () => setDragging(null);
+
+  // ---------------- WALLPAPER ----------------
+  const uploadWallpaper = (e: any) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const url = URL.createObjectURL(file);
+    setWallpaper(url);
+    localStorage.setItem('wallpaper', url);
   };
 
+  // ---------------- MAIN ----------------
   return (
     <div
-      id="desktop-area"
-      className="flex-1 relative overflow-hidden"
-      onClick={handleDesktopClick}
+      onMouseMove={onDrag}
+      onMouseUp={stopDrag}
+      onClick={() => {
+        setSelected(null);
+        setMenu(null);
+      }}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        setMenu({ x: e.clientX, y: e.clientY, type: 'desktop' });
+      }}
+      style={{
+        width: '100%',
+        height: '100%',
+        position: 'relative',
+        backgroundImage: wallpaper ? `url(${wallpaper})` : undefined,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: '#008080',
+        cursor: "url('https://cur.cursors-4u.net/windows/win-1/win16.cur'), default"
+      }}
     >
-      {/* Solarpunk subtle pattern overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage: `radial-gradient(circle at 20% 80%, rgba(45,90,39,0.3) 0%, transparent 50%),
-                           radial-gradient(circle at 80% 20%, rgba(26,122,109,0.2) 0%, transparent 50%),
-                           radial-gradient(circle at 50% 50%, rgba(198,168,75,0.1) 0%, transparent 70%)`,
-        }}
-      />
 
-      {icons.map(icon => (
-        <div
-          key={icon.id}
-          className={`absolute w-[72px] flex flex-col items-center gap-1 cursor-pointer p-1 ${
-            selectedIcon === icon.id ? 'desktop-icon-selected' : ''
-          }`}
-          style={{ left: icon.x, top: icon.y }}
-          onClick={(e) => { e.stopPropagation(); handleIconClick(icon.id); }}
-          onDoubleClick={() => handleIconDoubleClick(icon)}
-        >
-          <div className={`w-[32px] h-[32px] flex items-center justify-center ${
-            selectedIcon === icon.id ? 'opacity-70' : ''
-          }`}>
-            <div className="text-white drop-shadow-[1px_1px_0_rgba(0,0,0,0.5)]">
-              {getIcon(icon.icon, 32)}
-            </div>
-          </div>
-          <span
-            className={`desktop-icon-label text-[11px] text-center leading-tight px-[2px] max-w-[70px] break-words ${
-              selectedIcon === icon.id
-                ? 'bg-[#000080] text-white'
-                : 'text-white'
-            }`}
-            style={{ textShadow: selectedIcon === icon.id ? 'none' : '1px 1px 0 #000' }}
+      {/* ---------------- ICONS ---------------- */}
+      {icons.map((icon: any) => {
+        const app = installedApps.find((a: any) => a.id === icon.appId);
+
+        return (
+          <div
+            key={icon.id}
+            style={{
+              position: 'absolute',
+              left: icon.x,
+              top: icon.y,
+              width: 80,
+              padding: 6,
+              textAlign: 'center',
+              cursor: 'default',
+              color: 'white',
+              border: selected === icon.id ? '1px dotted white' : '1px solid transparent',
+              background: selected === icon.id
+                ? 'rgba(0,0,128,0.7)'
+                : 'rgba(0,0,0,0.4)',
+              borderRadius: 4
+            }}
+            onMouseDown={(e) => startDrag(e, icon)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelected(icon.id);
+            }}
+            onDoubleClick={() => app && onOpenApp(app)}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setMenu({ x: e.clientX, y: e.clientY, type: 'icon', icon });
+            }}
           >
-            {icon.label}
-          </span>
+            <div>{getIcon(icon.icon)}</div>
+            <div style={{ fontSize: 11 }}>{icon.label}</div>
+          </div>
+        );
+      })}
+
+      {/* ---------------- MENU ---------------- */}
+      {menu && (
+        <div
+          style={{
+            position: 'absolute',
+            top: menu.y,
+            left: menu.x,
+            background: '#c0c0c0',
+            border: '2px outset white',
+            zIndex: 9999,
+            width: 180,
+            fontSize: 12
+          }}
+        >
+          {menu.type === 'desktop' && (
+            <>
+              <div
+                style={{ padding: 6, cursor: 'pointer' }}
+                onClick={() => {
+                  fileInput.current?.click();
+                  setMenu(null);
+                }}
+              >
+                Change Wallpaper
+              </div>
+
+              <div
+                style={{ padding: 6, cursor: 'pointer' }}
+                onClick={() => {
+                  setWallpaper('/upload_files/wal3.jpg');
+                  localStorage.removeItem('wallpaper');
+                  setMenu(null);
+                }}
+              >
+                Reset Wallpaper
+              </div>
+            </>
+          )}
+
+          {menu.type === 'icon' && (
+            <>
+              <div
+                style={{ padding: 6, cursor: 'pointer' }}
+                onClick={() => {
+                  const app = installedApps.find((a: any) => a.id === menu.icon.appId);
+                  if (app) onOpenApp(app);
+                  setMenu(null);
+                }}
+              >
+                Open
+              </div>
+
+              <div
+                style={{ padding: 6, cursor: 'pointer', color: 'red' }}
+                onClick={() => {
+                  onDeleteApp(menu.icon.appId);
+                  setMenu(null);
+                }}
+              >
+                Delete
+              </div>
+            </>
+          )}
         </div>
-      ))}
+      )}
+
+      <input
+        ref={fileInput}
+        type="file"
+        style={{ display: 'none' }}
+        onChange={uploadWallpaper}
+      />
     </div>
   );
 }

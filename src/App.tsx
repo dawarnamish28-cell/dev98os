@@ -1,112 +1,126 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { AppDefinition, Screen } from './types';
-import { ALL_APPS, DESKTOP_ICONS, STORE_APPS } from './data/apps';
+import React, { useState, useEffect, useCallback } from 'react';
+import { ALL_APPS, DESKTOP_ICONS } from './data/apps';
 import { useWindowManager } from './hooks/useWindowManager';
-import LoginScreen from './components/LoginScreen';
+
 import Desktop from './components/Desktop';
 import Taskbar from './components/Taskbar';
 import Window from './components/Window';
+import LoginScreen from './components/LoginScreen';
+
+// -------- DEFAULT APPS --------
+import FileManager from './apps/FileManager';
 import Calculator from './apps/Calculator';
-import JsonViewer from './apps/JsonViewer';
-import ColorPicker from './apps/ColorPicker';
-import MarkdownPreview from './apps/MarkdownPreview';
+import Terminal from './apps/Terminal';
+import TextEditor from './apps/TextEditor';
+import AppStore from './apps/AppStore';
+
 import Snake from './apps/Snake';
 import Minesweeper from './apps/Minesweeper';
 import Clock from './apps/Clock';
-import Terminal from './apps/Terminal';
-import TextEditor from './apps/TextEditor';
-import FileManager from './apps/FileManager';
-import AppStore from './apps/AppStore';
+import JsonViewer from './apps/JsonViewer';
+import ColorPicker from './apps/ColorPicker';
+import MarkdownPreview from './apps/MarkdownPreview';
 import MyComputer from './apps/MyComputer';
-import StoreAppPlaceholder from './apps/StoreAppPlaceholder';
 
+// -------- YOUR CUSTOM APPS (FIXED PATH) --------
+import Camera from './apps/upload_files/camera';
+import CrusherDocs from './apps/upload_files/CrusherDocs';
+import CrusherSheets from './apps/upload_files/CrusherSheets';
+import CrusherSlides from './apps/upload_files/CrusherSlides';
+import PhotoshopCrash from './apps/upload_files/PhotoshopCrash';
+
+type Screen = 'boot' | 'login' | 'welcome' | 'desktop';
+
+// ---------------- BOOT ----------------
 function BootScreen({ onComplete }: { onComplete: () => void }) {
-  const [progress, setProgress] = useState(0);
-  const [lines, setLines] = useState<string[]>([]);
+  const lines = [
+    "Dev98 BIOS v1.0",
+    "Initializing memory...",
+    "Mounting filesystem...",
+    "Starting kernel...",
+    "Loading UI engine...",
+    "Launching Dev98...",
+    "",
+    "Ready."
+  ];
+
+  const [visible, setVisible] = useState<string[]>([]);
+  const [i, setI] = useState(0);
 
   useEffect(() => {
-    const bootLines = [
-      'Dev98 BIOS v1.0 - Solarpunk Edition',
-      'Checking system memory... 128 MB OK',
-      'Detecting hardware...',
-      '  CPU: Browser Engine v1.0',
-      '  Display: Active',
-      '  Storage: Virtual 2.0 GB',
-      'Loading Dev98 kernel...',
-      'Initializing filesystem...',
-      'Loading solarpunk theme engine...',
-      'Starting desktop environment...',
-      'Welcome to Dev98.',
-    ];
-
-    let idx = 0;
-    const interval = setInterval(() => {
-      if (idx < bootLines.length) {
-        setLines(prev => [...prev, bootLines[idx]]);
-        setProgress(Math.min(100, ((idx + 1) / bootLines.length) * 100));
-        idx++;
-      } else {
-        clearInterval(interval);
-        setTimeout(onComplete, 400);
-      }
-    }, 200);
-
-    return () => clearInterval(interval);
-  }, [onComplete]);
+    if (i < lines.length) {
+      const t = setTimeout(() => {
+        setVisible(v => [...v, lines[i]]);
+        setI(i + 1);
+      }, 100);
+      return () => clearTimeout(t);
+    } else {
+      setTimeout(onComplete, 600);
+    }
+  }, [i, onComplete]);
 
   return (
-    <div className="w-full h-full bg-black flex flex-col items-center justify-center relative">
-      {/* Scanline overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none z-10"
-        style={{
-          background: 'repeating-linear-gradient(transparent 0, transparent 1px, rgba(0,0,0,0.08) 1px, rgba(0,0,0,0.08) 2px)',
-        }}
-      />
-
-      <div className="relative z-20 w-[500px]">
-        {/* Logo */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#2d5a27] via-[#1a7a6d] to-[#000080] border border-[#7cb342] flex items-center justify-center">
-              <span className="text-white text-xl font-bold font-pixel">98</span>
-            </div>
-            <div>
-              <div className="text-white text-2xl font-bold font-pixel tracking-wider">Dev98</div>
-              <div className="text-[#7cb342] text-[10px]">Solarpunk Edition</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Boot log */}
-        <div className="bg-[#0a0a0a] border border-[#333] p-3 font-mono text-[12px] h-[200px] overflow-hidden mb-3">
-          {lines.map((line, i) => (
-            <div key={i} className={`${line.startsWith('  ') ? 'text-[#808080]' : line.includes('OK') || line.includes('Welcome') ? 'text-[#7cb342]' : 'text-[#c0c0c0]'}`}>
-              {line}
-            </div>
-          ))}
-          <span className="text-[#7cb342] animate-pulse">_</span>
-        </div>
-
-        {/* Progress bar */}
-        <div className="win98-progress">
-          <div
-            className="h-full bg-[#1a7a6d] transition-all duration-200"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <div className="text-center text-[10px] text-[#808080] mt-2">
-          Loading Dev98... {Math.round(progress)}%
-        </div>
-      </div>
+    <div style={{
+      background: 'black',
+      color: '#00ff9f',
+      height: '100vh',
+      padding: 20,
+      fontFamily: 'monospace'
+    }}>
+      {visible.map((l, idx) => <div key={idx}>{l}</div>)}
+      <span>█</span>
     </div>
   );
 }
 
+// ---------------- WELCOME ----------------
+function WelcomeScreen({ username, onDone }: { username: string, onDone: () => void }) {
+  const [text, setText] = useState('');
+  const full = `Hello, ${username}`;
+
+  useEffect(() => {
+    let i = 0;
+
+    const type = setInterval(() => {
+      setText(full.slice(0, i));
+      i++;
+
+      if (i > full.length) {
+        clearInterval(type);
+        setTimeout(onDone, 1000);
+      }
+    }, 50);
+
+    return () => clearInterval(type);
+  }, [username, onDone]);
+
+  return (
+    <div style={{
+      height: '100vh',
+      background: 'linear-gradient(#000080, black)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: 'white',
+      fontSize: 40,
+      fontFamily: 'sans-serif'
+    }}>
+      {text}
+    </div>
+  );
+}
+
+// ---------------- MAIN APP ----------------
 export default function App() {
+
   const [screen, setScreen] = useState<Screen>('boot');
-  const [username, setUsername] = useState('');
-  const [installedApps, setInstalledApps] = useState<AppDefinition[]>(ALL_APPS);
+  const [username, setUsername] = useState('User');
+
+  const [desktopIcons, setDesktopIcons] = useState(DESKTOP_ICONS);
+  const [installedApps, setInstalledApps] = useState(ALL_APPS);
+  const [wallpaper, setWallpaper] = useState('/upload_files/wal3.jpg');
+
+  const [isCrashed, setIsCrashed] = useState(false);
 
   const {
     windows,
@@ -120,103 +134,138 @@ export default function App() {
     restoreWindow,
   } = useWindowManager();
 
-  const handleLogin = useCallback((name: string) => {
-    setUsername(name);
-    setScreen('desktop');
+  // ---------------- CRASH ----------------
+  const triggerCrash = useCallback(() => {
+    setIsCrashed(true);
   }, []);
 
-  const handleOpenApp = useCallback((app: AppDefinition) => {
-    openWindow(app);
-  }, [openWindow]);
-
-  const handleInstallApp = useCallback((app: AppDefinition) => {
-    setInstalledApps(prev => {
-      if (prev.some(a => a.id === app.id)) return prev;
-      return [...prev, app];
-    });
+  useEffect(() => {
+    const esc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsCrashed(false);
+    };
+    window.addEventListener('keydown', esc);
+    return () => window.removeEventListener('keydown', esc);
   }, []);
 
-  const handleUninstallApp = useCallback((appId: string) => {
-    const coreApps = ALL_APPS.map(a => a.id);
-    if (coreApps.includes(appId)) return;
-    setInstalledApps(prev => prev.filter(a => a.id !== appId));
-  }, []);
-
-  const renderAppContent = (appId: string) => {
+  // ---------------- APP RENDER ----------------
+  const renderApp = (appId: string) => {
     switch (appId) {
+
+      // system
+      case 'my-computer': return <MyComputer />;
+      case 'file-manager': return <FileManager />;
       case 'calculator': return <Calculator />;
-      case 'json-viewer': return <JsonViewer />;
-      case 'color-picker': return <ColorPicker />;
-      case 'markdown-preview': return <MarkdownPreview />;
-      case 'snake': return <Snake />;
-      case 'minesweeper': return <Minesweeper />;
-      case 'clock': return <Clock />;
       case 'terminal': return <Terminal />;
       case 'text-editor': return <TextEditor />;
-      case 'file-manager': return <FileManager />;
+
+      // store
       case 'app-store':
         return (
           <AppStore
             installedApps={installedApps}
-            onInstallApp={handleInstallApp}
-            onUninstallApp={handleUninstallApp}
+            onInstallApp={(app) => setInstalledApps(p => [...p, app])}
+            onUninstallApp={(id) => setInstalledApps(p => p.filter(a => a.id !== id))}
           />
         );
-      case 'my-computer': return <MyComputer />;
-      default: {
-        const appDef = installedApps.find(a => a.id === appId);
-        if (appDef) {
-          return <StoreAppPlaceholder app={appDef} />;
-        }
-        return (
-          <div className="flex items-center justify-center h-full bg-[#c0c0c0] text-[11px] text-[#808080]">
-            Application not found: {appId}
-          </div>
-        );
-      }
+
+      // games/util
+      case 'snake': return <Snake />;
+      case 'minesweeper': return <Minesweeper />;
+      case 'clock': return <Clock />;
+      case 'json-viewer': return <JsonViewer />;
+      case 'color-picker': return <ColorPicker />;
+      case 'markdown-preview': return <MarkdownPreview />;
+
+      // 🔥 YOUR APPS
+      case 'camera': return <Camera />;
+      case 'crusher-docs': return <CrusherDocs />;
+      case 'crusher-sheets': return <CrusherSheets />;
+      case 'crusher-slides': return <CrusherSlides />;
+
+      case 'photoshop':
+        return <PhotoshopCrash onCrash={triggerCrash} />;
+
+      default:
+        return <div style={{ padding: 20 }}>App not found: {appId}</div>;
     }
   };
 
-  // Get highest z-index window
-  const topWindowId = windows.length > 0
-    ? windows.reduce((top, w) => w.zIndex > top.zIndex ? w : top, windows[0]).id
-    : null;
+  // ---------------- ACTIONS ----------------
+  const handleOpenApp = (app: any) => {
+    if (!app) return;
+    openWindow(app);
+  };
 
-  if (screen === 'boot') {
+  const handleDeleteApp = (appId: string) => {
+    setInstalledApps(p => p.filter(a => a.id !== appId));
+    setDesktopIcons(p => p.filter(i => i.appId !== appId));
+  };
+
+  // ---------------- FLOW ----------------
+  if (screen === 'boot')
     return <BootScreen onComplete={() => setScreen('login')} />;
-  }
 
-  if (screen === 'login') {
-    return <LoginScreen onLogin={handleLogin} />;
-  }
-
-  return (
-    <div className="w-full h-full flex flex-col relative scanlines" style={{ backgroundColor: '#008080' }}>
-      {/* Desktop area */}
-      <Desktop
-        icons={DESKTOP_ICONS}
-        onOpenApp={handleOpenApp}
-        installedApps={installedApps}
+  if (screen === 'login')
+    return (
+      <LoginScreen
+        onLogin={(name) => {
+          setUsername(name || 'User');
+          setScreen('welcome');
+        }}
       />
+    );
 
-      {/* Windows */}
-      {windows.map(win => (
-        <Window
-          key={win.id}
-          window={win}
-          isActive={win.id === topWindowId && !win.isMinimized}
-          onClose={closeWindow}
-          onMinimize={minimizeWindow}
-          onMaximize={maximizeWindow}
-          onFocus={focusWindow}
-          onMove={updateWindowPosition}
-          onResize={updateWindowSize}
-        >
-          {renderAppContent(win.appId)}
-        </Window>
-      ))}
+  if (screen === 'welcome')
+    return <WelcomeScreen username={username} onDone={() => setScreen('desktop')} />;
 
-      {/* Taskbar */}
+  // ---------------- DESKTOP ----------------
+  return (
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+
+      <div style={{ flex: 1, position: 'relative' }}>
+
+        <Desktop
+          username={username}
+          icons={desktopIcons}
+          setIcons={setDesktopIcons}
+          installedApps={installedApps}
+          onOpenApp={handleOpenApp}
+          onDeleteApp={handleDeleteApp}
+          wallpaper={wallpaper}
+          setWallpaper={setWallpaper}
+        />
+
+        {/* WINDOWS */}
+        {!isCrashed && windows.map((win: any) => (
+          <Window
+            key={win.id}
+            window={win}
+            isActive={!win.isMinimized}
+            onClose={closeWindow}
+            onMinimize={minimizeWindow}
+            onMaximize={maximizeWindow}
+            onFocus={focusWindow}
+            onMove={updateWindowPosition}
+            onResize={updateWindowSize}
+          >
+            {renderApp(win.appId)}
+          </Window>
+        ))}
+
+        {/* CRASH SCREEN */}
+        {isCrashed && (
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: '#000080',
+            zIndex: 9999
+          }}>
+            <PhotoshopCrash />
+          </div>
+        )}
+
+      </div>
+
       <Taskbar
         windows={windows}
         onFocusWindow={focusWindow}
@@ -225,6 +274,7 @@ export default function App() {
         onOpenApp={handleOpenApp}
         installedApps={installedApps}
       />
+
     </div>
   );
 }
