@@ -178,10 +178,18 @@ export default function App() {
     }
   };
 
-  const handleOpenApp = (app: any) => {
-    if (!app) return;
-    openWindow(app);
-  };
+  const handleOpenApp = useCallback((app: any) => {
+  if (!app) return;
+
+  // external apps (like CollabCode)
+  if (app.url) {
+    window.open(app.url, '_blank');
+    return;
+  }
+
+  // internal apps
+  openWindow(app);
+}, [openWindow]);
 
   const handleDeleteApp = (appId: string) => {
     setInstalledApps(p => p.filter(a => a.id !== appId));
