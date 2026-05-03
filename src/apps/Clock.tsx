@@ -27,7 +27,7 @@ export default function Clock() {
 
     ctx.clearRect(0, 0, size, size);
 
-    // Face
+    
     ctx.beginPath();
     ctx.arc(center, center, radius, 0, Math.PI * 2);
     ctx.fillStyle = '#fffff0';
@@ -36,14 +36,14 @@ export default function Clock() {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Inner border
+    
     ctx.beginPath();
     ctx.arc(center, center, radius - 3, 0, Math.PI * 2);
     ctx.strokeStyle = '#808080';
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    // Hour markers
+   
     for (let i = 0; i < 12; i++) {
       const angle = (i * Math.PI) / 6 - Math.PI / 2;
       const inner = radius - 12;
@@ -55,7 +55,7 @@ export default function Clock() {
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      // Numbers
+      
       const numRadius = radius - 22;
       ctx.fillStyle = '#000';
       ctx.font = 'bold 12px "MS Sans Serif", sans-serif';
@@ -65,7 +65,7 @@ export default function Clock() {
       ctx.fillText(String(num), center + numRadius * Math.cos(angle), center + numRadius * Math.sin(angle));
     }
 
-    // Minute markers
+
     for (let i = 0; i < 60; i++) {
       if (i % 5 === 0) continue;
       const angle = (i * Math.PI) / 30 - Math.PI / 2;
@@ -83,7 +83,7 @@ export default function Clock() {
     const minutes = time.getMinutes();
     const seconds = time.getSeconds();
 
-    // Hour hand
+    
     const hAngle = ((hours + minutes / 60) * Math.PI) / 6 - Math.PI / 2;
     ctx.beginPath();
     ctx.moveTo(center, center);
@@ -93,7 +93,7 @@ export default function Clock() {
     ctx.lineCap = 'round';
     ctx.stroke();
 
-    // Minute hand
+  
     const mAngle = ((minutes + seconds / 60) * Math.PI) / 30 - Math.PI / 2;
     ctx.beginPath();
     ctx.moveTo(center, center);
@@ -103,7 +103,7 @@ export default function Clock() {
     ctx.lineCap = 'round';
     ctx.stroke();
 
-    // Second hand
+    
     const sAngle = (seconds * Math.PI) / 30 - Math.PI / 2;
     ctx.beginPath();
     ctx.moveTo(center, center);
@@ -113,14 +113,14 @@ export default function Clock() {
     ctx.lineCap = 'round';
     ctx.stroke();
 
-    // Center dot
+  
     ctx.beginPath();
     ctx.arc(center, center, 3, 0, Math.PI * 2);
     ctx.fillStyle = '#c6a84b';
     ctx.fill();
   }, [time, tab]);
 
-  // Stopwatch
+ 
   useEffect(() => {
     if (swRunning) {
       swStartRef.current = performance.now();
