@@ -68,7 +68,7 @@ export default function AppStore({
   return (
     <div className="flex flex-col h-full bg-[#c0c0c0]">
 
-      {/* HEADER */}
+   
       <div className="bg-gradient-to-r from-[#2d5a27] to-[#1a7a6d] p-3 border-b-2 border-b-[#808080]">
         <div className="flex items-center gap-2">
           <Icons.ShoppingBag size={20} className="text-white" />
@@ -84,7 +84,7 @@ export default function AppStore({
         />
       </div>
 
-      {/* TABS */}
+
       <div className="flex border-b border-b-[#808080]">
         <button
           className={`px-4 py-1 text-[11px] ${tab === 'browse' ? 'bg-[#c0c0c0] font-bold border-b-2 border-b-[#000080]' : 'bg-[#b0b0b0]'}`}
@@ -104,7 +104,7 @@ export default function AppStore({
       {tab === 'browse' ? (
         <div className="flex flex-1 min-h-0">
 
-          {/* SIDEBAR */}
+          
           <div className="w-[100px] border-r border-r-[#808080] overflow-auto p-1">
             {categories.map(cat => (
               <button
@@ -119,7 +119,7 @@ export default function AppStore({
             ))}
           </div>
 
-          {/* APPS */}
+         
           <div className="flex-1 overflow-auto p-2">
             {filteredApps.length === 0 ? (
               <div className="text-center text-[#808080] text-[11px] mt-8">
@@ -195,7 +195,7 @@ export default function AppStore({
         </div>
       )}
 
-      {/* STATUS */}
+    
       <div className="flex text-[10px] border-t-2 border-[#808080] px-1">
         <div className="flex-1 win98-border-sunken px-2">
           {storeApps.length} apps available
