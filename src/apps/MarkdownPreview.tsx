@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { marked } from 'marked';
+import React, { useState } from 'react'
+import { marked } from 'marked'
 
 const DEFAULT_MD = `# Welcome to Dev98 Markdown
 ## A Solarpunk WebOS
@@ -31,53 +31,70 @@ greet("Dev98");
 
 ---
 *Built for the hackathon.*
-`;
+`
 
 export default function MarkdownPreview() {
-  const [md, setMd] = useState(DEFAULT_MD);
+  const [md, setMd] = useState(DEFAULT_MD)
 
   const getHtml = () => {
     try {
-      return marked.parse(md, { async: false }) as string;
+      return marked.parse(md, { async: false }) as string
     } catch {
-      return '<p>Error parsing markdown</p>';
+      return '<p>Error parsing markdown</p>'
     }
-  };
+  }
 
   return (
     <div className="flex flex-col h-full bg-[#c0c0c0]">
-      {/* Toolbar */}
+
       <div className="flex items-center gap-1 p-1 border-b border-b-[#808080]">
-        <button className="win98-btn text-[11px] h-[22px]" onClick={() => setMd(DEFAULT_MD)}>Reset</button>
-        <button className="win98-btn text-[11px] h-[22px]" onClick={() => setMd('')}>Clear</button>
-        <button className="win98-btn text-[11px] h-[22px]" onClick={() => {
-          navigator.clipboard.writeText(getHtml()).catch(() => {});
-        }}>Copy HTML</button>
+        <button
+          className="win98-btn text-[11px] h-[22px]"
+          onClick={() => setMd(DEFAULT_MD)}
+        >
+          Reset
+        </button>
+
+        <button
+          className="win98-btn text-[11px] h-[22px]"
+          onClick={() => setMd('')}
+        >
+          Clear
+        </button>
+
+        <button
+          className="win98-btn text-[11px] h-[22px]"
+          onClick={() => {
+            navigator.clipboard.writeText(getHtml()).catch(() => {})
+          }}
+        >
+          Copy HTML
+        </button>
       </div>
 
       <div className="flex flex-1 min-h-0">
-        {/* Editor */}
+
         <div className="flex-1 flex flex-col p-1">
           <div className="text-[10px] text-[#808080] mb-1">Markdown</div>
+
           <textarea
             value={md}
-            onChange={(e) => setMd(e.target.value)}
+            onChange={e => setMd(e.target.value)}
             className="win98-textarea flex-1 w-full text-[11px]"
             spellCheck={false}
           />
         </div>
 
-        {/* Preview */}
         <div className="flex-1 flex flex-col p-1">
           <div className="text-[10px] text-[#808080] mb-1">Preview</div>
+
           <div
             className="win98-border-field bg-white flex-1 overflow-auto p-2 text-[12px]"
             dangerouslySetInnerHTML={{ __html: getHtml() }}
-            style={{
-              lineHeight: '1.5',
-            }}
+            style={{ lineHeight: '1.5' }}
           />
         </div>
+
       </div>
 
       <style>{`
@@ -99,6 +116,7 @@ export default function MarkdownPreview() {
         .win98-border-field em { font-style: italic; }
         .win98-border-field a { color: #000080; text-decoration: underline; }
       `}</style>
+
     </div>
-  );
+  )
 }
