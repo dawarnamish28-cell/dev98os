@@ -38,7 +38,6 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
 
   return (
     <div className="w-full h-full bg-[#008080] flex items-center justify-center relative scanlines">
-      {/* Scanline overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -46,7 +45,6 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
         }}
       />
 
-      {/* Solarpunk accent gradients */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -57,7 +55,6 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
       />
 
       <div className="relative z-10 flex flex-col items-center">
-        {/* Logo and Title */}
         <div className="mb-6 text-center">
           <div className="flex items-center justify-center gap-3 mb-2">
             <div className="w-16 h-16 bg-gradient-to-br from-[#2d5a27] via-[#1a7a6d] to-[#000080] border-2 border-white border-r-[#404040] border-b-[#404040] shadow-[inset_1px_1px_0_#dfdfdf,inset_-1px_-1px_0_#808080] flex items-center justify-center">
@@ -72,9 +69,7 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
           </p>
         </div>
 
-        {/* Login Window */}
         <div className="bg-[#c0c0c0] border-2 border-white border-r-[#404040] border-b-[#404040] shadow-[inset_1px_1px_0_#dfdfdf,inset_-1px_-1px_0_#808080] w-[360px]">
-          {/* Title bar */}
           <div className="bg-gradient-to-r from-[#000080] to-[#1084d0] h-[22px] flex items-center px-2">
             <Icons.LogIn size={12} className="text-white mr-1" />
             <span className="text-white text-[12px] font-bold">
@@ -82,7 +77,6 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
             </span>
           </div>
 
-          {/* Content */}
           <div className="p-4">
             <div className="flex items-start gap-3 mb-4">
               <div className="w-10 h-10 bg-white border-2 border-[#808080] border-r-white border-b-white shadow-[inset_1px_1px_0_#404040] flex items-center justify-center shrink-0">
@@ -156,7 +150,6 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
           </div>
         </div>
 
-        {/* Footer */}
         <p className="text-[10px] text-[#80c0b0] mt-4" style={{ textShadow: '1px 1px 0 rgba(0,0,0,0.3)' }}>
           Dev98 v1.0 -- Built for Hackathon 2026
         </p>
