@@ -18,39 +18,35 @@ export default function Desktop({
   const offset = useRef({ x: 0, y: 0 });
   const fileInput = useRef<HTMLInputElement>(null);
 
-  // ---------------- ICON ----------------
   const getIcon = (icon: string) => {
-  // IMAGE ICON (from /public)
-  if (icon.startsWith('/')) {
-    return (
-      <img
-        src={icon}
-        alt="icon"
-        style={{
-          width: 42,
-          height: 42,
-          objectFit: 'contain',
-          pointerEvents: 'none'
-        }}
-        draggable={false}
-      />
-    );
-  }
-
-  // LUCIDE ICON (fallback)
-  const Icon = (Icons as any)[icon];
-  return Icon
-    ? <Icon size={32} />
-    : (
-        <div style={{
-          width: 32,
-          height: 32,
-          background: '#888'
-        }} />
+    if (icon.startsWith('/')) {
+      return (
+        <img
+          src={icon}
+          alt="icon"
+          style={{
+            width: 42,
+            height: 42,
+            objectFit: 'contain',
+            pointerEvents: 'none'
+          }}
+          draggable={false}
+        />
       );
-};
+    }
 
-  // ---------------- DRAG ----------------
+    const Icon = (Icons as any)[icon];
+    return Icon
+      ? <Icon size={32} />
+      : (
+          <div style={{
+            width: 32,
+            height: 32,
+            background: '#888'
+          }} />
+        );
+  };
+
   const startDrag = (e: any, icon: any) => {
     offset.current = {
       x: e.clientX - icon.x,
@@ -77,7 +73,6 @@ export default function Desktop({
 
   const stopDrag = () => setDragging(null);
 
-  // ---------------- WALLPAPER ----------------
   const uploadWallpaper = (e: any) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -87,7 +82,6 @@ export default function Desktop({
     localStorage.setItem('wallpaper', url);
   };
 
-  // ---------------- MAIN ----------------
   return (
     <div
       onMouseMove={onDrag}
@@ -113,7 +107,6 @@ export default function Desktop({
       }}
     >
 
-      {/* ---------------- ICONS ---------------- */}
       {icons.map((icon: any) => {
         const app = installedApps.find((a: any) => a.id === icon.appId);
 
@@ -153,7 +146,6 @@ export default function Desktop({
         );
       })}
 
-      {/* ---------------- MENU ---------------- */}
       {menu && (
         <div
           style={{
