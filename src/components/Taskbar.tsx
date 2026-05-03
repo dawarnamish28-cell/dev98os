@@ -71,7 +71,6 @@ export default function Taskbar({
 
   return (
     <div className="h-[36px] bg-[#c0c0c0] border-t-2 border-t-white flex items-center px-[2px] shrink-0 relative z-[10000]">
-      {/* Start Button */}
       <button
         ref={startBtnRef}
         className={`h-[28px] px-2 flex items-center gap-1 font-bold text-[11px] border-2 mr-1 ${
@@ -87,10 +86,8 @@ export default function Taskbar({
         <span>Start</span>
       </button>
 
-      {/* Divider */}
       <div className="w-[2px] h-[24px] border-l border-l-[#808080] border-r border-r-white mx-1" />
 
-      {/* Quick Launch */}
       <div className="flex items-center gap-[2px] mr-1">
         {['terminal', 'text-editor', 'file-manager'].map(appId => {
           const app = installedApps.find(a => a.id === appId);
@@ -108,10 +105,8 @@ export default function Taskbar({
         })}
       </div>
 
-      {/* Divider */}
       <div className="w-[2px] h-[24px] border-l border-l-[#808080] border-r border-r-white mx-1" />
 
-      {/* Open Windows */}
       <div className="flex-1 flex items-center gap-[2px] overflow-hidden">
         {windows.map(win => (
           <button
@@ -135,7 +130,6 @@ export default function Taskbar({
         ))}
       </div>
 
-      {/* System Tray */}
       <div className="w-[2px] h-[24px] border-l border-l-[#808080] border-r border-r-white mx-1" />
       <div className="flex items-center h-[24px] px-2 border-2 border-[#808080] border-r-white border-b-white shadow-[inset_1px_1px_0_#404040]">
         <Icons.Volume2 size={14} className="mr-2 text-[#404040]" />
@@ -144,20 +138,17 @@ export default function Taskbar({
         </div>
       </div>
 
-      {/* Start Menu */}
       {startOpen && (
         <div
           ref={startMenuRef}
           className="absolute bottom-[36px] left-0 bg-[#c0c0c0] border-2 border-white border-r-[#404040] border-b-[#404040] shadow-[2px_2px_0_rgba(0,0,0,0.3)] min-w-[200px] flex"
         >
-          {/* Side banner */}
           <div className="w-[24px] bg-gradient-to-t from-[#000080] to-[#1084d0] flex items-end pb-2">
             <span className="text-white text-[11px] font-bold writing-mode-vertical transform -rotate-90 whitespace-nowrap origin-bottom-left translate-x-[18px]">
               Dev98
             </span>
           </div>
 
-          {/* Menu items */}
           <div className="flex-1 py-1">
             {categories.map(cat => (
               <React.Fragment key={cat}>
