@@ -1,17 +1,17 @@
-import React, { useState, useMemo } from 'react';
-import { AppDefinition } from '../types';
-import * as Icons from 'lucide-react';
-import { STORE_APPS } from '../data/apps';
+import React, { useState, useMemo } from 'react'
+import { AppDefinition } from '../types'
+import * as Icons from 'lucide-react'
+import { STORE_APPS } from '../data/apps'
 
 function getIcon(name: string, size = 24) {
-  const IconComponent = (Icons as any)[name];
-  return IconComponent ? <IconComponent size={size} /> : null;
+  const IconComponent = (Icons as any)[name]
+  return IconComponent ? <IconComponent size={size} /> : null
 }
 
 interface AppStoreProps {
-  installedApps: AppDefinition[];
-  onInstallApp: (app: AppDefinition) => void;
-  onUninstallApp: (appId: string) => void;
+  installedApps: AppDefinition[]
+  onInstallApp: (app: AppDefinition) => void
+  onUninstallApp: (appId: string) => void
 }
 
 export default function AppStore({
@@ -20,55 +20,54 @@ export default function AppStore({
   onUninstallApp
 }: AppStoreProps) {
 
-  const [search, setSearch] = useState('');
-  const [selectedCat, setSelectedCat] = useState<string>('All');
-  const [installing, setInstalling] = useState<string | null>(null);
-  const [tab, setTab] = useState<'browse' | 'installed'>('browse');
+  const [search, setSearch] = useState('')
+  const [selectedCat, setSelectedCat] = useState<string>('All')
+  const [installing, setInstalling] = useState<string | null>(null)
+  const [tab, setTab] = useState<'browse' | 'installed'>('browse')
 
-  const storeApps = Array.isArray(STORE_APPS) ? STORE_APPS : [];
+  const storeApps = Array.isArray(STORE_APPS) ? STORE_APPS : []
 
   const categories = useMemo(() => {
-    return ['All', ...Array.from(new Set(storeApps.map(a => a.category)))];
-  }, [storeApps]);
+    return ['All', ...Array.from(new Set(storeApps.map(a => a.category)))]
+  }, [storeApps])
 
   const filteredApps = useMemo(() => {
     return storeApps.filter(app => {
       const matchSearch =
         app.name.toLowerCase().includes(search.toLowerCase()) ||
-        app.description.toLowerCase().includes(search.toLowerCase());
+        app.description.toLowerCase().includes(search.toLowerCase())
 
       const matchCat =
-        selectedCat === 'All' || app.category === selectedCat;
+        selectedCat === 'All' || app.category === selectedCat
 
-      return matchSearch && matchCat;
-    });
-  }, [storeApps, search, selectedCat]);
+      return matchSearch && matchCat
+    })
+  }, [storeApps, search, selectedCat])
 
   const isInstalled = (appId: string) =>
-    installedApps.some(a => a.id === appId);
+    installedApps.some(a => a.id === appId)
 
   const handleInstall = async (app: AppDefinition) => {
-    setInstalling(app.id);
-    await new Promise(r => setTimeout(r, 800));
-    onInstallApp({ ...app, installed: true });
-    setInstalling(null);
-  };
+    setInstalling(app.id)
+    await new Promise(r => setTimeout(r, 800))
+    onInstallApp({ ...app, installed: true })
+    setInstalling(null)
+  }
 
   const handleUninstall = async (appId: string) => {
-    setInstalling(appId);
-    await new Promise(r => setTimeout(r, 500));
-    onUninstallApp(appId);
-    setInstalling(null);
-  };
+    setInstalling(appId)
+    await new Promise(r => setTimeout(r, 500))
+    onUninstallApp(appId)
+    setInstalling(null)
+  }
 
   const userInstalledApps = installedApps.filter(a =>
     storeApps.some(s => s.id === a.id)
-  );
+  )
 
   return (
     <div className="flex flex-col h-full bg-[#c0c0c0]">
 
-   
       <div className="bg-gradient-to-r from-[#2d5a27] to-[#1a7a6d] p-3 border-b-2 border-b-[#808080]">
         <div className="flex items-center gap-2">
           <Icons.ShoppingBag size={20} className="text-white" />
@@ -84,17 +83,24 @@ export default function AppStore({
         />
       </div>
 
-
       <div className="flex border-b border-b-[#808080]">
         <button
-          className={`px-4 py-1 text-[11px] ${tab === 'browse' ? 'bg-[#c0c0c0] font-bold border-b-2 border-b-[#000080]' : 'bg-[#b0b0b0]'}`}
+          className={`px-4 py-1 text-[11px] ${
+            tab === 'browse'
+              ? 'bg-[#c0c0c0] font-bold border-b-2 border-b-[#000080]'
+              : 'bg-[#b0b0b0]'
+          }`}
           onClick={() => setTab('browse')}
         >
           Browse
         </button>
 
         <button
-          className={`px-4 py-1 text-[11px] ${tab === 'installed' ? 'bg-[#c0c0c0] font-bold border-b-2 border-b-[#000080]' : 'bg-[#b0b0b0]'}`}
+          className={`px-4 py-1 text-[11px] ${
+            tab === 'installed'
+              ? 'bg-[#c0c0c0] font-bold border-b-2 border-b-[#000080]'
+              : 'bg-[#b0b0b0]'
+          }`}
           onClick={() => setTab('installed')}
         >
           Installed ({userInstalledApps.length})
@@ -104,13 +110,14 @@ export default function AppStore({
       {tab === 'browse' ? (
         <div className="flex flex-1 min-h-0">
 
-          
           <div className="w-[100px] border-r border-r-[#808080] overflow-auto p-1">
             {categories.map(cat => (
               <button
                 key={cat}
                 className={`w-full text-left text-[11px] px-2 py-1 ${
-                  selectedCat === cat ? 'bg-[#000080] text-white' : 'hover:bg-[#dfdfdf]'
+                  selectedCat === cat
+                    ? 'bg-[#000080] text-white'
+                    : 'hover:bg-[#dfdfdf]'
                 }`}
                 onClick={() => setSelectedCat(cat)}
               >
@@ -119,7 +126,6 @@ export default function AppStore({
             ))}
           </div>
 
-         
           <div className="flex-1 overflow-auto p-2">
             {filteredApps.length === 0 ? (
               <div className="text-center text-[#808080] text-[11px] mt-8">
@@ -181,7 +187,10 @@ export default function AppStore({
             </div>
           ) : (
             userInstalledApps.map(app => (
-              <div key={app.id} className="win98-border-raised p-2 flex justify-between items-center">
+              <div
+                key={app.id}
+                className="win98-border-raised p-2 flex justify-between items-center"
+              >
                 <span>{app.name}</span>
                 <button
                   className="win98-btn text-[10px]"
@@ -195,7 +204,6 @@ export default function AppStore({
         </div>
       )}
 
-    
       <div className="flex text-[10px] border-t-2 border-[#808080] px-1">
         <div className="flex-1 win98-border-sunken px-2">
           {storeApps.length} apps available
@@ -206,5 +214,5 @@ export default function AppStore({
       </div>
 
     </div>
-  );
+  )
 }
