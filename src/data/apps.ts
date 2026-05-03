@@ -7,7 +7,7 @@ export const ALL_APPS: AppDefinition[] = [
   { id: 'terminal', name: 'Terminal', icon: '/upload_files/terminal-removebg-preview.png', category: 'Development', size: '256 KB', description: 'Command line', installed: true },
   { id: 'text-editor', name: 'Text Editor', icon: '/upload_files/docs-removebg-preview.png', category: 'Development', size: '160 KB', description: 'Simple editor', installed: true },
   { id: 'app-store', name: 'App Store', icon: '/upload_files/folder-removebg-preview.png', category: 'System', size: '320 KB', description: 'Install apps', installed: true },
-
+  { id: 'collabcode', name: 'CollabCode', icon: 'Code', category: 'Development', size: '--', description: 'Real-Time Collaborative coding', installed: true , url:'https://collabcodeforall.vercel.app'},
   { id: 'snake', name: 'Snake', icon: 'Gamepad2', category: 'Games', size: '48 KB', description: 'Snake game', installed: true },
   { id: 'minesweeper', name: 'Minesweeper', icon: 'Bomb', category: 'Games', size: '96 KB', description: 'Minesweeper', installed: true },
 
@@ -41,6 +41,7 @@ export const DESKTOP_ICONS: DesktopIcon[] = [
   { id: 'icon-store', label: 'App Store', icon: '/upload_files/folder-removebg-preview.png', appId: 'app-store', x: 20, y: 380 },
   { id: 'icon-snake', label: 'Snake', icon: 'Gamepad2', appId: 'snake', x: 20, y: 470 },
   { id: 'icon-minesweeper', label: 'Minesweeper', icon: 'Bomb', appId: 'minesweeper', x: 20, y: 560 },
+  { id: 'icon-collabcode', label: 'CollabCode', icon: 'Code', appId: 'collabcode', x: 200, y: 300 },
 
   { id: 'icon-calculator', label: 'Calculator', icon: '/upload_files/calculator-removebg-preview.png', appId: 'calculator', x: 110, y: 20 },
   { id: 'icon-clock', label: 'Clock', icon: 'Clock', appId: 'clock', x: 110, y: 110 },
