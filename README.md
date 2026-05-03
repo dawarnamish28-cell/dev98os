@@ -144,10 +144,7 @@ https://dev98os.vercel.app
 
 ## Author
 
-Namish Dawar
+CodeCrushers
 
 ---
 
-## Acknowledgement
-
-If you find this project useful, consider starring the repository.
