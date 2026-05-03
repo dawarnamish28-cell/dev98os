@@ -132,9 +132,7 @@ export default function Window({
       className="flex flex-col"
       onMouseDown={() => onFocus(win.id)}
     >
-      {/* Window outer frame */}
       <div className="flex flex-col h-full bg-[#c0c0c0] border-2 border-t-white border-l-white border-b-[#404040] border-r-[#404040] shadow-[inset_1px_1px_0_#dfdfdf,inset_-1px_-1px_0_#808080]">
-        {/* Title bar */}
         <div
           className={`flex items-center h-[22px] px-[3px] py-[2px] select-none shrink-0 ${
             isActive
@@ -180,13 +178,11 @@ export default function Window({
           </div>
         </div>
 
-        {/* Window content */}
         <div className="flex-1 overflow-hidden flex flex-col min-h-0">
           {children}
         </div>
       </div>
 
-      {/* Resize handles */}
       {!win.isMaximized && (
         <>
           <div className="absolute top-0 left-0 right-0 h-1 cursor-n-resize" onMouseDown={(e) => handleResizeMouseDown(e, 'n')} />
