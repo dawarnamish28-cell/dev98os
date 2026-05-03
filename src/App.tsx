@@ -7,7 +7,6 @@ import Taskbar from './components/Taskbar';
 import Window from './components/Window';
 import LoginScreen from './components/LoginScreen';
 
-// -------- DEFAULT APPS --------
 import FileManager from './apps/FileManager';
 import Calculator from './apps/Calculator';
 import Terminal from './apps/Terminal';
@@ -22,7 +21,6 @@ import ColorPicker from './apps/ColorPicker';
 import MarkdownPreview from './apps/MarkdownPreview';
 import MyComputer from './apps/MyComputer';
 
-// -------- YOUR CUSTOM APPS (FIXED PATH) --------
 import Camera from './apps/upload_files/camera';
 import CrusherDocs from './apps/upload_files/CrusherDocs';
 import CrusherSheets from './apps/upload_files/CrusherSheets';
@@ -31,7 +29,6 @@ import PhotoshopCrash from './apps/upload_files/PhotoshopCrash';
 
 type Screen = 'boot' | 'login' | 'welcome' | 'desktop';
 
-// ---------------- BOOT ----------------
 function BootScreen({ onComplete }: { onComplete: () => void }) {
   const lines = [
     "Dev98 BIOS v1.0",
@@ -73,7 +70,6 @@ function BootScreen({ onComplete }: { onComplete: () => void }) {
   );
 }
 
-// ---------------- WELCOME ----------------
 function WelcomeScreen({ username, onDone }: { username: string, onDone: () => void }) {
   const [text, setText] = useState('');
   const full = `Hello, ${username}`;
@@ -110,7 +106,6 @@ function WelcomeScreen({ username, onDone }: { username: string, onDone: () => v
   );
 }
 
-// ---------------- MAIN APP ----------------
 export default function App() {
 
   const [screen, setScreen] = useState<Screen>('boot');
@@ -134,7 +129,6 @@ export default function App() {
     restoreWindow,
   } = useWindowManager();
 
-  // ---------------- CRASH ----------------
   const triggerCrash = useCallback(() => {
     setIsCrashed(true);
   }, []);
@@ -147,18 +141,14 @@ export default function App() {
     return () => window.removeEventListener('keydown', esc);
   }, []);
 
-  // ---------------- APP RENDER ----------------
   const renderApp = (appId: string) => {
     switch (appId) {
-
-      // system
       case 'my-computer': return <MyComputer />;
       case 'file-manager': return <FileManager />;
       case 'calculator': return <Calculator />;
       case 'terminal': return <Terminal />;
       case 'text-editor': return <TextEditor />;
 
-      // store
       case 'app-store':
         return (
           <AppStore
@@ -168,7 +158,6 @@ export default function App() {
           />
         );
 
-      // games/util
       case 'snake': return <Snake />;
       case 'minesweeper': return <Minesweeper />;
       case 'clock': return <Clock />;
@@ -176,7 +165,6 @@ export default function App() {
       case 'color-picker': return <ColorPicker />;
       case 'markdown-preview': return <MarkdownPreview />;
 
-      // 🔥 YOUR APPS
       case 'camera': return <Camera />;
       case 'crusher-docs': return <CrusherDocs />;
       case 'crusher-sheets': return <CrusherSheets />;
@@ -190,7 +178,6 @@ export default function App() {
     }
   };
 
-  // ---------------- ACTIONS ----------------
   const handleOpenApp = (app: any) => {
     if (!app) return;
     openWindow(app);
@@ -201,7 +188,6 @@ export default function App() {
     setDesktopIcons(p => p.filter(i => i.appId !== appId));
   };
 
-  // ---------------- FLOW ----------------
   if (screen === 'boot')
     return <BootScreen onComplete={() => setScreen('login')} />;
 
@@ -218,7 +204,6 @@ export default function App() {
   if (screen === 'welcome')
     return <WelcomeScreen username={username} onDone={() => setScreen('desktop')} />;
 
-  // ---------------- DESKTOP ----------------
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
 
@@ -235,7 +220,6 @@ export default function App() {
           setWallpaper={setWallpaper}
         />
 
-        {/* WINDOWS */}
         {!isCrashed && windows.map((win: any) => (
           <Window
             key={win.id}
@@ -252,7 +236,6 @@ export default function App() {
           </Window>
         ))}
 
-        {/* CRASH SCREEN */}
         {isCrashed && (
           <div style={{
             position: 'absolute',
